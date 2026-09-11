@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: store_service
+      POSTGRES_USER: store_service
+      POSTGRES_PASSWORD: store_service
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/store_service
+      DATABASE_USER: store_service
+      DATABASE_PASSWORD: store_service
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres-data:

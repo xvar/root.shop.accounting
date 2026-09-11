@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+build/
+*/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local config
+local.properties
+.env
+.env.*
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Kotlin/Native
+kotlin-native/
+
+# Xcode / iOS
+iosApp/build/
+*.xcuserstate
+DerivedData/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
