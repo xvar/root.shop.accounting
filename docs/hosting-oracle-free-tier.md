@@ -49,6 +49,20 @@ Free лимит Ampere A1 вдвое — с 4 OCPU/24 GB до **2 OCPU/12 GB**, 
    отдельное урезание тарифа Oracle, а не следствие выбора "on-demand".
 4. Networking: создай новый VCN (или используй дефолтный), **публичная
    подсеть**, "Assign a public IPv4 address" — включено.
+
+   ⚠️ **Частый затык**: чекбокс "Assign a public IPv4 address" серый и не
+   включается. Причина всегда одна — выбранный **subnet помечен как
+   Private**, а Oracle физически не даёт публичный IP приватным сабнетам
+   (это не баг и не вопрос прав). Открой выпадающий список Subnet — у
+   каждого подписано "(Public Subnet)" или "(Private Subnet)" — выбери/
+   создай Public. Если такого нет, там же "Create new subnet" → Subnet
+   Access → **Public Subnet**. Надёжнее всего — не создавать VCN inline
+   при создании инстанса, а зайти в Networking → Virtual Cloud Networks →
+   **Start VCN Wizard → "Create VCN with Internet Connectivity"**: он сам
+   правильно создаёт публичный+приватный сабнет, Internet Gateway и
+   роутинг, и потом просто выбрать эту VCN при создании инстанса.
+   "Primary VNIC" в форме — это просто название сетевой карты инстанса,
+   отдельно настраивать её не нужно, всё дело в выборе subnet.
 5. SSH keys: сгенерируй пару (`ssh-keygen -t ed25519`) и вставь публичный
    ключ, либо загрузи существующий. Приватный ключ сохрани локально.
 6. Create.
